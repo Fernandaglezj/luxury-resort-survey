@@ -92,36 +92,36 @@ export function BackgroundMusic({
       <audio ref={audioRef} src={audioSrc} preload="metadata" />
       
       <div 
-        className={`fixed bottom-4 right-4 z-50 transition-all duration-500 ${
+        className={`fixed z-50 transition-all duration-500 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-        }`}
+        } bottom-4 right-4 md:bottom-4 md:right-4 lg:bottom-6 lg:right-6`}
         onMouseEnter={() => setIsVisible(true)}
         onMouseLeave={hideControls}
       >
-        <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-3 shadow-2xl">
-          <div className="flex items-center gap-3">
+        <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-2 md:p-3 shadow-2xl">
+          <div className="flex items-center gap-2 md:gap-3">
             {/* Play/Pause Button */}
             <Button
               onClick={togglePlay}
               size="sm"
               variant="outline"
-              className="bg-white/20 border-white/30 text-white hover:bg-white/30"
+              className="bg-white/20 border-white/30 text-white hover:bg-white/30 h-8 w-8 md:h-9 md:w-9 p-0"
             >
-              {isPlaying ? <Pause size={16} /> : <Play size={16} />}
+              {isPlaying ? <Pause size={14} className="md:w-4 md:h-4" /> : <Play size={14} className="md:w-4 md:h-4" />}
             </Button>
 
             {/* Volume Controls */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1 md:gap-2">
               <Button
                 onClick={toggleMute}
                 size="sm"
                 variant="outline"
-                className="bg-white/20 border-white/30 text-white hover:bg-white/30"
+                className="bg-white/20 border-white/30 text-white hover:bg-white/30 h-8 w-8 md:h-9 md:w-9 p-0"
               >
-                {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+                {isMuted ? <VolumeX size={14} className="md:w-4 md:h-4" /> : <Volume2 size={14} className="md:w-4 md:h-4" />}
               </Button>
               
-              <div className="w-20">
+              <div className="w-16 md:w-20">
                 <Slider
                   value={[isMuted ? 0 : volume * 100]}
                   onValueChange={handleVolumeChange}

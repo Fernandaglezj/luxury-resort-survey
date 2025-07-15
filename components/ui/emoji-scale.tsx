@@ -28,10 +28,14 @@ export const EmojiScale: React.FC<EmojiScaleProps> = ({ value, onChange, disable
   const defaultLabels = t.defaultLabels
   const labelList = labels && labels.length === emojiList.length ? labels : defaultLabels.slice(0, emojiList.length)
   
+  // If the happy emoji is selected (last emoji), show all happy faces
+  const isHappySelected = value === emojiList.length
+  const displayEmojis = isHappySelected ? emojiList.map(() => "😊") : emojiList
+  
   return (
     <div className="flex flex-col items-center gap-2">
       <div className="flex gap-2">
-        {emojiList.map((emoji, idx) => (
+        {displayEmojis.map((emoji, idx) => (
           <button
             key={idx}
             type="button"

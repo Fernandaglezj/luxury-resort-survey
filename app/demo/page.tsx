@@ -129,12 +129,13 @@ const mockQuestions = [
   },
   {
     id: "4",
-    question: "¿Se sintió más relajado?",
+    question: "¿Cómo calificaría la amabilidad del personal?",
     questionEn: "Did you feel more relaxed?",
-    inputType: "bar_scale",
+    inputType: "emoji",
     category: "General",
     subcategory: "Estancia General",
     required: true,
+    options: ["😞", "😐", "😊"],
   },
   {
     id: "5",
@@ -158,10 +159,11 @@ const mockQuestions = [
     id: "7",
     question: "¿Qué tan exclusiva se sintió su experiencia en la suite?",
     questionEn: "How exclusive did your suite experience feel?",
-    inputType: "bar_scale",
+    inputType: "emoji",
     category: "Suite",
     subcategory: "Su Suite",
     required: true,
+    options: ["😞", "😐", "😊"],
   },
   {
     id: "8",
@@ -194,10 +196,11 @@ const mockQuestions = [
     id: "11",
     question: "¿Cómo te sentiste con el ambiente del lugar?",
     questionEn: "How did you feel about the atmosphere of the place?",
-    inputType: "stars",
+    inputType: "emoji",
     category: "Haab",
     subcategory: "Experiencia Gastronómica",
     required: true,
+    options: ["😞", "😐", "😊"],
   },
   {
     id: "12",
@@ -221,10 +224,11 @@ const mockQuestions = [
     id: "14",
     question: "¿Cómo te sentiste con el ambiente del lugar?",
     questionEn: "How did you feel about the atmosphere of the place?",
-    inputType: "stars",
+    inputType: "emoji",
     category: "Saffron",
     subcategory: "Experiencia Gastronómica",
     required: true,
+    options: ["😞", "😐", "😊"],
   },
   {
     id: "15",
@@ -257,10 +261,11 @@ const mockQuestions = [
     id: "18",
     question: "¿Qué tan especial sentiste la experiencia comparada con otros campos de golf?",
     questionEn: "How special did you feel the experience was compared to other golf courses?",
-    inputType: "bar_scale",
+    inputType: "emoji",
     category: "Golf",
     subcategory: "Experiencia Golf",
     required: true,
+    options: ["😞", "😐", "😊"],
   },
 ]
 
@@ -347,7 +352,7 @@ export default function DemoSurvey() {
         </Button>
       </div>
       
-      <div className="relative z-10 w-full max-w-4xl px-4 py-8">
+      <div className="relative z-10 w-full max-w-4xl px-4 py-8 pb-20 md:pb-8">
         <div className="w-full">
           <AnimatePresence mode="wait">
             {step === 0 && (
