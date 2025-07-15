@@ -821,7 +821,7 @@ export default function DemoSurvey() {
       
       {/* Background Music Player */}
       <BackgroundMusic 
-        audioSrc="/audio/music.mp3"
+        audioSrc="/audio/musica2.mp3"
         autoPlay={false}
         loop={true}
       />
