@@ -5,9 +5,27 @@ interface Stars5Props {
   value: number
   onChange: (value: number) => void
   disabled?: boolean
+  language?: "es" | "en"
 }
 
-export const Stars5: React.FC<Stars5Props> = ({ value, onChange, disabled }) => {
+const starTranslations = {
+  es: {
+    rating: "Calificación",
+    star: "estrella",
+    stars: "estrellas",
+    selectRating: "Selecciona una calificación"
+  },
+  en: {
+    rating: "Rating",
+    star: "star",
+    stars: "stars",
+    selectRating: "Select a rating"
+  }
+}
+
+export const Stars5: React.FC<Stars5Props> = ({ value, onChange, disabled, language = "es" }) => {
+  const t = starTranslations[language]
+  
   return (
     <div className="flex flex-col items-center gap-2">
       <div className="flex gap-2">
@@ -20,14 +38,14 @@ export const Stars5: React.FC<Stars5Props> = ({ value, onChange, disabled }) => 
             className={`transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-amber-400/60 ${
               value >= star ? "text-amber-400" : "text-sage-400"
             }`}
-            aria-label={`Calificación ${star}`}
+            aria-label={`${t.rating} ${star}`}
           >
             <Star size={44} fill={value >= star ? "#f59e42" : "none"} />
           </button>
         ))}
       </div>
       <div className="text-sm text-white mt-1 tracking-wide">
-        {value ? `${value} estrella${value > 1 ? 's' : ''}` : "Selecciona una calificación"}
+        {value ? `${value} ${value > 1 ? t.stars : t.star}` : t.selectRating}
       </div>
     </div>
   )

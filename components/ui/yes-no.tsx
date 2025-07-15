@@ -1,17 +1,33 @@
 import React from "react"
 
+const yesNoTranslations = {
+  es: {
+    yes: "Sí",
+    no: "No",
+    maybe: "Tal vez"
+  },
+  en: {
+    yes: "Yes",
+    no: "No",
+    maybe: "Maybe"
+  }
+}
+
 interface YesNoProps {
   value: string
   onChange: (value: string) => void
   withMaybe?: boolean
   disabled?: boolean
+  language?: "es" | "en"
 }
 
-export const YesNo: React.FC<YesNoProps> = ({ value, onChange, withMaybe = false, disabled }) => {
+export const YesNo: React.FC<YesNoProps> = ({ value, onChange, withMaybe = false, disabled, language = "es" }) => {
+  const t = yesNoTranslations[language]
+  
   const options = [
-    { label: "Sí", value: "yes", color: "bg-green-500" },
-    ...(withMaybe ? [{ label: "Tal vez", value: "maybe", color: "bg-amber-400" }] : []),
-    { label: "No", value: "no", color: "bg-red-500" },
+    { label: t.yes, value: "yes", color: "bg-green-500" },
+    ...(withMaybe ? [{ label: t.maybe, value: "maybe", color: "bg-amber-400" }] : []),
+    { label: t.no, value: "no", color: "bg-red-500" },
   ]
   return (
     <div className="flex gap-4 justify-center">

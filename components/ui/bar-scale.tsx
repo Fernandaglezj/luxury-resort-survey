@@ -6,6 +6,18 @@ interface BarScaleProps {
   min?: number
   max?: number
   disabled?: boolean
+  language?: "es" | "en"
+}
+
+const barScaleTranslations = {
+  es: {
+    level: "Nivel",
+    selectLevel: "Selecciona el nivel"
+  },
+  en: {
+    level: "Level",
+    selectLevel: "Select the level"
+  }
 }
 
 export function BarScale({ 
@@ -13,9 +25,11 @@ export function BarScale({
   onChange, 
   min = 1, 
   max = 5, 
-  disabled = false 
+  disabled = false,
+  language = "es"
 }: BarScaleProps) {
   const levels = Array.from({ length: max - min + 1 }, (_, i) => min + i)
+  const t = barScaleTranslations[language]
 
   // Color gradient from yellow to green
   const getBarColor = (level: number, isSelected: boolean) => {
@@ -56,7 +70,7 @@ export function BarScale({
                 ${disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}
               `}
               style={{ height: `${height}%` }}
-              aria-label={`Nivel ${level}`}
+              aria-label={`${t.level} ${level}`}
             />
           )
         })}
@@ -64,10 +78,10 @@ export function BarScale({
       
       <div className="text-center">
         <div className="text-gray-400 text-sm font-medium">
-          Nivel {value}
+          {t.level} {value}
         </div>
         <div className="text-gray-300 text-xs">
-          Selecciona el nivel
+          {t.selectLevel}
         </div>
       </div>
     </div>

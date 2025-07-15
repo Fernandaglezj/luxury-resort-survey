@@ -1,7 +1,17 @@
 import React from "react"
 
 const defaultEmojis = ["😞", "😐", "🙂", "😊", "🤩"]
-const defaultLabels = ["Muy mal", "Regular", "Bien", "Muy bien", "Excelente"]
+
+const emojiTranslations = {
+  es: {
+    defaultLabels: ["Muy mal", "Regular", "Bien", "Muy bien", "Excelente"],
+    selectOption: "Selecciona una opción"
+  },
+  en: {
+    defaultLabels: ["Very bad", "Regular", "Good", "Very good", "Excellent"],
+    selectOption: "Select an option"
+  }
+}
 
 interface EmojiScaleProps {
   value: number
@@ -9,11 +19,15 @@ interface EmojiScaleProps {
   disabled?: boolean
   emojis?: string[]
   labels?: string[]
+  language?: "es" | "en"
 }
 
-export const EmojiScale: React.FC<EmojiScaleProps> = ({ value, onChange, disabled, emojis, labels }) => {
+export const EmojiScale: React.FC<EmojiScaleProps> = ({ value, onChange, disabled, emojis, labels, language = "es" }) => {
   const emojiList = emojis && emojis.length > 0 ? emojis : defaultEmojis
+  const t = emojiTranslations[language]
+  const defaultLabels = t.defaultLabels
   const labelList = labels && labels.length === emojiList.length ? labels : defaultLabels.slice(0, emojiList.length)
+  
   return (
     <div className="flex flex-col items-center gap-2">
       <div className="flex gap-2">
@@ -35,7 +49,7 @@ export const EmojiScale: React.FC<EmojiScaleProps> = ({ value, onChange, disable
         ))}
       </div>
       <div className="text-sm text-white mt-1 tracking-wide">
-        {value ? labelList[value - 1] : "Selecciona una opción"}
+        {value ? labelList[value - 1] : t.selectOption}
       </div>
     </div>
   )

@@ -6,16 +6,101 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
-import { Leaf, Sparkles, Loader2, ChevronRight } from "lucide-react"
+import { Leaf, Sparkles, Loader2, ChevronRight, Globe } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { QuestionPreview } from "@/components/QuestionPreview"
 import { BackgroundMusic } from "@/components/BackgroundMusic"
+
+// Translations
+const translations = {
+  es: {
+    welcome: "¡Bienvenido, {name}!",
+    startSurvey: "Comenzar encuesta",
+    roomNumber: "Número de habitación",
+    lastName: "Apellido",
+    roomPlaceholder: "Ej: 101",
+    lastNamePlaceholder: "Ej: García",
+    roomError: "Por favor ingresa el número de habitación y el apellido.",
+    title: "Banyan Tree Mayakoba",
+    subtitle: "Queremos conocer tu experiencia para seguir mejorando cada detalle",
+    haabTitle: "Cuéntanos sobre tu experiencia en el restaurante Haab",
+    saffronTitle: "Cuéntanos sobre tu experiencia en el restaurante Saffron",
+    golfTitle: "Cuéntanos sobre tu experiencia en nuestro campo de golf El Camaleón",
+    suiteTitle: "Cuéntanos sobre tu experiencia en la habitación Deluxe Pool Villa With Living Room.",
+    generalTitle: "¡Tu opinión importa! Dinos qué te pareció tu estancia.",
+    activitiesTitle: "¿Cómo le fue en las diversas actividades en las que participó?",
+    spaTitle: "Cuéntenos sobre su experiencia en el spa.",
+    roomServiceTitle: "Cuéntenos sobre el servicio a la habitación.",
+    cleaningTitle: "¿Qué le pareció la limpieza y el orden de su habitación?",
+    defaultTitle: "Queremos conocer más sobre su experiencia en esta sección.",
+    previous: "Anterior",
+    next: "Siguiente",
+    nextSection: "Siguiente sección",
+    finishSurvey: "Finalizar encuesta",
+    page: "Página",
+    of: "de",
+    thankYou: "¡Gracias por contestar la encuesta!",
+    thankYouMessage: "Tu opinión es muy valiosa para nosotros y nos ayuda a mejorar cada detalle de tu experiencia.",
+    thankYouPersonal: "¡Gracias por tu opinión, {name}! Esperamos verte pronto para que disfrutes aún más.",
+    additionalComments: "¿Te gustaría compartir algún comentario adicional?",
+    commentsPlaceholder: "Escribe aquí tus comentarios, sugerencias o cualquier detalle que consideres importante para mejorar la experiencia...",
+    commentsSubtitle: "Cualquier sugerencia o comentario que nos ayude a mejorar la experiencia es bienvenido.",
+    back: "Volver",
+    finish: "Finalizar",
+    finalThankYou: "¡Gracias por tu tiempo!",
+    finalMessage: "Tu opinión es muy valiosa para nosotros. Nos ayuda a crear experiencias aún más memorables.",
+    language: "Idioma",
+    spanish: "Español",
+    english: "English"
+  },
+  en: {
+    welcome: "Welcome, {name}!",
+    startSurvey: "Start Survey",
+    roomNumber: "Room Number",
+    lastName: "Last Name",
+    roomPlaceholder: "Ex: 101",
+    lastNamePlaceholder: "Ex: Garcia",
+    roomError: "Please enter the room number and last name.",
+    title: "Banyan Tree Mayakoba",
+    subtitle: "We want to know about your experience to keep improving every detail",
+    haabTitle: "Tell us about your experience at Haab restaurant",
+    saffronTitle: "Tell us about your experience at Saffron restaurant",
+    golfTitle: "Tell us about your experience at our El Camaleón golf course",
+    suiteTitle: "Tell us about your experience in the Deluxe Pool Villa With Living Room.",
+    generalTitle: "Your opinion matters! Tell us what you thought of your stay.",
+    activitiesTitle: "How was your experience in the various activities you participated in?",
+    spaTitle: "Tell us about your spa experience.",
+    roomServiceTitle: "Tell us about the room service.",
+    cleaningTitle: "What did you think about the cleanliness and order of your room?",
+    defaultTitle: "We want to know more about your experience in this section.",
+    previous: "Previous",
+    next: "Next",
+    nextSection: "Next section",
+    finishSurvey: "Finish survey",
+    page: "Page",
+    of: "of",
+    thankYou: "Thank you for completing the survey!",
+    thankYouMessage: "Your opinion is very valuable to us and helps us improve every detail of your experience.",
+    thankYouPersonal: "Thank you for your opinion, {name}! We hope to see you soon so you can enjoy even more.",
+    additionalComments: "Would you like to share any additional comments?",
+    commentsPlaceholder: "Write here your comments, suggestions or any detail you consider important to improve the experience...",
+    commentsSubtitle: "Any suggestion or comment that helps us improve the experience is welcome.",
+    back: "Back",
+    finish: "Finish",
+    finalThankYou: "Thank you for your time!",
+    finalMessage: "Your opinion is very valuable to us. It helps us create even more memorable experiences.",
+    language: "Language",
+    spanish: "Español",
+    english: "English"
+  }
+}
 
 // Mock data para preguntas y huésped
 const mockQuestions = [
   {
     id: "1",
     question: "¿Cómo se sintió al llegar por primera vez a nuestro santuario?",
+    questionEn: "How did you feel when you first arrived at our sanctuary?",
     inputType: "emoji",
     category: "General",
     subcategory: "Estancia General",
@@ -25,6 +110,7 @@ const mockQuestions = [
   {
     id: "2",
     question: "Eficiencia del proceso de Check-in y entrega de habitación",
+    questionEn: "Efficiency of the Check-in process and room delivery",
     inputType: "slider",
     category: "General",
     subcategory: "Estancia General",
@@ -35,6 +121,7 @@ const mockQuestions = [
   {
     id: "3",
     question: "Calidad General del Servicio",
+    questionEn: "General Service Quality",
     inputType: "stars",
     category: "General",
     subcategory: "Estancia General",
@@ -43,6 +130,7 @@ const mockQuestions = [
   {
     id: "4",
     question: "¿Se sintió más relajado?",
+    questionEn: "Did you feel more relaxed?",
     inputType: "bar_scale",
     category: "General",
     subcategory: "Estancia General",
@@ -51,6 +139,7 @@ const mockQuestions = [
   {
     id: "5",
     question: "¿Se sintió que la suite fue preparada exclusivamente para usted?",
+    questionEn: "Did you feel that the suite was prepared exclusively for you?",
     inputType: "bar_scale",
     category: "Suite",
     subcategory: "Su Suite",
@@ -59,6 +148,7 @@ const mockQuestions = [
   {
     id: "6",
     question: "Balance Perfecto entre Lujo y Comodidad",
+    questionEn: "Perfect Balance between Luxury and Comfort",
     inputType: "stars",
     category: "Suite",
     subcategory: "Su Suite",
@@ -67,6 +157,7 @@ const mockQuestions = [
   {
     id: "7",
     question: "¿Qué tan exclusiva se sintió su experiencia en la suite?",
+    questionEn: "How exclusive did your suite experience feel?",
     inputType: "bar_scale",
     category: "Suite",
     subcategory: "Su Suite",
@@ -75,6 +166,7 @@ const mockQuestions = [
   {
     id: "8",
     question: "Satisfacción General con la Suite",
+    questionEn: "General Satisfaction with the Suite",
     inputType: "stars",
     category: "Suite",
     subcategory: "Su Suite",
@@ -83,6 +175,7 @@ const mockQuestions = [
   {
     id: "9",
     question: "¿Qué te pareció el sabor y la calidad de la comida?",
+    questionEn: "What did you think about the taste and quality of the food?",
     inputType: "stars",
     category: "Haab",
     subcategory: "Experiencia Gastronómica",
@@ -91,6 +184,7 @@ const mockQuestions = [
   {
     id: "10",
     question: "¿Cómo fue la atención y qué tan rápido te atendimos?",
+    questionEn: "How was the service and how quickly did we serve you?",
     inputType: "stars",
     category: "Haab",
     subcategory: "Experiencia Gastronómica",
@@ -99,6 +193,7 @@ const mockQuestions = [
   {
     id: "11",
     question: "¿Cómo te sentiste con el ambiente del lugar?",
+    questionEn: "How did you feel about the atmosphere of the place?",
     inputType: "stars",
     category: "Haab",
     subcategory: "Experiencia Gastronómica",
@@ -107,6 +202,7 @@ const mockQuestions = [
   {
     id: "12",
     question: "¿Qué te pareció el sabor y la calidad de la comida?",
+    questionEn: "What did you think about the taste and quality of the food?",
     inputType: "stars",
     category: "Saffron",
     subcategory: "Experiencia Gastronómica",
@@ -115,6 +211,7 @@ const mockQuestions = [
   {
     id: "13",
     question: "¿Cómo fue la atención y qué tan rápido te atendimos?",
+    questionEn: "How was the service and how quickly did we serve you?",
     inputType: "stars",
     category: "Saffron",
     subcategory: "Experiencia Gastronómica",
@@ -123,6 +220,7 @@ const mockQuestions = [
   {
     id: "14",
     question: "¿Cómo te sentiste con el ambiente del lugar?",
+    questionEn: "How did you feel about the atmosphere of the place?",
     inputType: "stars",
     category: "Saffron",
     subcategory: "Experiencia Gastronómica",
@@ -131,6 +229,7 @@ const mockQuestions = [
   {
     id: "15",
     question: "¿Cómo calificarías tu experiencia en El Camaleón?",
+    questionEn: "How would you rate your experience at El Camaleón?",
     inputType: "stars",
     category: "Golf",
     subcategory: "Experiencia Golf",
@@ -139,6 +238,7 @@ const mockQuestions = [
   {
     id: "16",
     question: "¿Qué tan retador y divertido te pareció el recorrido?",
+    questionEn: "How challenging and fun did you find the course?",
     inputType: "bar_scale",
     category: "Golf",
     subcategory: "Experiencia Golf",
@@ -147,6 +247,7 @@ const mockQuestions = [
   {
     id: "17",
     question: "¿Cómo evaluarías la calidad y el mantenimiento de nuestras instalaciones?",
+    questionEn: "How would you evaluate the quality and maintenance of our facilities?",
     inputType: "stars",
     category: "Golf",
     subcategory: "Experiencia Golf",
@@ -155,6 +256,7 @@ const mockQuestions = [
   {
     id: "18",
     question: "¿Qué tan especial sentiste la experiencia comparada con otros campos de golf?",
+    questionEn: "How special did you feel the experience was compared to other golf courses?",
     inputType: "bar_scale",
     category: "Golf",
     subcategory: "Experiencia Golf",
@@ -168,10 +270,18 @@ export default function DemoSurvey() {
   const [roomNumber, setRoomNumber] = useState("");
   const [roomError, setRoomError] = useState("");
   const [lastName, setLastName] = useState("");
+  const [language, setLanguage] = useState<"es" | "en">("es");
 
   const [step, setStep] = useState(0)
   const [responses, setResponses] = useState<{ [id: string]: any }>({})
   const [loading, setLoading] = useState(false)
+
+  const t = translations[language];
+
+  // Helper function to get translated question text
+  const getQuestionText = (question: any) => {
+    return language === "en" ? question.questionEn || question.question : question.question;
+  };
 
   // Agrupar preguntas por categoría y subcategoría
   const groupedQuestions = mockQuestions.reduce((acc, q) => {
@@ -209,16 +319,34 @@ export default function DemoSurvey() {
 
   const handleRoomSubmit = () => {
     if (!roomNumber.trim() || !lastName.trim()) {
-      setRoomError("Por favor ingresa el número de habitación y el apellido.");
+      setRoomError(t.roomError);
       return;
     }
     setRoomError("");
     setStep(1);
   };
 
+  const toggleLanguage = () => {
+    setLanguage(language === "es" ? "en" : "es");
+  };
+
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center relative overflow-hidden font-['Cormorant Garamond'],serif" style={{ backgroundImage: 'url(/images/fondo.png)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
       <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/40 via-slate-900/40 to-emerald-800/40 z-0"></div>
+      
+      {/* Language Switcher */}
+      <div className="absolute top-4 right-4 z-20">
+        <Button
+          onClick={toggleLanguage}
+          variant="outline"
+          size="sm"
+          className="bg-white/10 backdrop-blur-md border-white/30 text-white hover:bg-white/20"
+        >
+          <Globe className="h-4 w-4 mr-2" />
+          {language === "es" ? "EN" : "ES"}
+        </Button>
+      </div>
+      
       <div className="relative z-10 w-full max-w-4xl px-4 py-8">
         <div className="w-full">
           <AnimatePresence mode="wait">
@@ -231,34 +359,34 @@ export default function DemoSurvey() {
               >
                 <div className="space-y-6">
                   <img src="/images/Logo.png" alt="Logo" className="mx-auto w-20 h-20" />
-                  <h1 className="text-5xl font-light text-white tracking-[0.3em] uppercase">Banyan Tree Mayakoba</h1>
+                  <h1 className="text-5xl font-light text-white tracking-[0.3em] uppercase">{t.title}</h1>
                   <p className="text-lg text-white/90 leading-relaxed max-w-md mx-auto tracking-wide">
-                    Queremos conocer tu experiencia para seguir mejorando cada detalle
+                    {t.subtitle}
                   </p>
                 </div>
                 <Card className="backdrop-blur-md bg-white/10 border-white/20 shadow-2xl">
                   <CardContent className="p-8 space-y-6">
                     <div className="space-y-2">
                       <Label htmlFor="room" className="text-white font-light tracking-wide">
-                        Número de habitación
+                        {t.roomNumber}
                       </Label>
                       <Input
                         id="room"
                         value={roomNumber}
                         onChange={(e) => setRoomNumber(e.target.value)}
-                        placeholder="Ej: 101"
+                        placeholder={t.roomPlaceholder}
                         className="text-center text-lg border-white/30 focus:border-amber-400 bg-white/10 text-white placeholder:text-white/60 backdrop-blur-sm"
                       />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="lastName" className="text-white font-light tracking-wide">
-                        Apellido
+                        {t.lastName}
                       </Label>
                       <Input
                         id="lastName"
                         value={lastName}
                         onChange={(e) => setLastName(e.target.value)}
-                        placeholder="Ej: García"
+                        placeholder={t.lastNamePlaceholder}
                         className="text-center text-lg border-white/30 focus:border-amber-400 bg-white/10 text-white placeholder:text-white/60 backdrop-blur-sm"
                       />
                     </div>
@@ -267,7 +395,7 @@ export default function DemoSurvey() {
                       disabled={!roomNumber.trim() || !lastName.trim()}
                       className="w-full bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white py-3 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl tracking-wider uppercase font-light"
                     >
-                      Comenzar encuesta
+                      {t.startSurvey}
                     </Button>
                     {roomError && <div className="text-red-400 text-sm mt-2">{roomError}</div>}
                   </CardContent>
@@ -283,7 +411,7 @@ export default function DemoSurvey() {
               >
                 <div className="text-center mb-8">
                   {subcatStep === 0 && (
-                    <h2 className="text-5xl font-light text-yellow-300 mb-4">¡Bienvenido, {mockGuest.name}!</h2>
+                    <h2 className="text-5xl font-light text-yellow-300 mb-4">{t.welcome.replace('{name}', mockGuest.name)}</h2>
                   )}
                   {subcatStep > 0 && (
                     <div className="flex flex-col items-center space-y-4">
@@ -296,25 +424,25 @@ export default function DemoSurvey() {
                   {(() => {
                     switch ((currentSubcat.category || '').toLowerCase()) {
                       case 'actividades':
-                        return <p className="text-white mb-4">¿Cómo le fue en las diversas actividades en las que participó?</p>;
+                        return <p className="text-white mb-4">{t.activitiesTitle}</p>;
                       case 'spa':
-                        return <p className="text-white mb-4">Cuéntenos sobre su experiencia en el spa.</p>;
+                        return <p className="text-white mb-4">{t.spaTitle}</p>;
                       case 'haab':
-                        return <p className="text-white text-2xl text-center mb-6 font-light">Cuéntanos sobre tu experiencia en el restaurante Haab</p>;
+                        return <p className="text-white text-2xl text-center mb-6 font-light">{t.haabTitle}</p>;
                       case 'saffron':
-                        return <p className="text-white text-2xl text-center mb-6 font-light">Cuéntanos sobre tu experiencia en el restaurante Saffron</p>;
+                        return <p className="text-white text-2xl text-center mb-6 font-light">{t.saffronTitle}</p>;
                       case 'golf':
-                        return <p className="text-white text-2xl text-center mb-6 font-light">Cuéntanos sobre tu experiencia en nuestro campo de golf El Camaleón</p>;
+                        return <p className="text-white text-2xl text-center mb-6 font-light">{t.golfTitle}</p>;
                       case 'room service':
-                        return <p className="text-white mb-4">Cuéntenos sobre el servicio a la habitación.</p>;
+                        return <p className="text-white mb-4">{t.roomServiceTitle}</p>;
                       case 'limpieza':
-                        return <p className="text-white mb-4">¿Qué le pareció la limpieza y el orden de su habitación?</p>;
+                        return <p className="text-white mb-4">{t.cleaningTitle}</p>;
                       case 'suite':
-                        return <p className="text-white text-2xl text-center mb-6 font-light"> Cuéntanos sobre tu experiencia en la habitación Deluxe Pool Villa With Living Room .</p>;
+                        return <p className="text-white text-2xl text-center mb-6 font-light">{t.suiteTitle}</p>;
                       case 'general':
-                        return <p className="text-white mb-4">¡Tu opinión importa! Dinos qué te pareció tu estancia.</p>;
+                        return <p className="text-white mb-4">{t.generalTitle}</p>;
                       default:
-                        return <p className="text-white mb-4">Queremos conocer más sobre su experiencia en esta sección.</p>;
+                        return <p className="text-white mb-4">{t.defaultTitle}</p>;
                     }
                   })()}
                   
@@ -345,12 +473,13 @@ export default function DemoSurvey() {
                           {currentQuestions.map(q => (
                             <Card key={q.id} className="bg-white/5 border-white/20 shadow-2xl h-64 flex flex-col">
                               <CardContent className="p-6 flex-1 flex flex-col">
-                                <div className="text-white text-base mb-4 flex-shrink-0">{q.question}</div>
+                                <div className="text-white text-base mb-4 flex-shrink-0">{getQuestionText(q)}</div>
                                 <div className="flex-1 flex items-center justify-center">
                                   <QuestionPreview
                                     question={q}
                                     value={responses[q.id] ?? ""}
                                     setValue={(v) => setResponses((prev) => ({ ...prev, [q.id]: v }))}
+                                    language={language}
                                   />
                                 </div>
                               </CardContent>
@@ -386,11 +515,12 @@ export default function DemoSurvey() {
                           {currentQuestions.map((q, index) => (
                             <Card key={q.id} className="bg-white/5 border-white/20 shadow-2xl h-40">
                               <CardContent className="p-6 h-full flex flex-col justify-center">
-                                <div className="text-white text-lg mb-4">{q.question}</div>
+                                <div className="text-white text-lg mb-4">{getQuestionText(q)}</div>
                                 <QuestionPreview
                                   question={q}
                                   value={responses[q.id] ?? ""}
                                   setValue={(v) => setResponses((prev) => ({ ...prev, [q.id]: v }))}
+                                  language={language}
                                 />
                               </CardContent>
                             </Card>
@@ -425,11 +555,12 @@ export default function DemoSurvey() {
                           {currentQuestions.map((q, index) => (
                             <Card key={q.id} className="bg-white/5 border-white/20 shadow-2xl h-40">
                               <CardContent className="p-6 h-full flex flex-col justify-center">
-                                <div className="text-white text-lg mb-4">{q.question}</div>
+                                <div className="text-white text-lg mb-4">{getQuestionText(q)}</div>
                                 <QuestionPreview
                                   question={q}
                                   value={responses[q.id] ?? ""}
                                   setValue={(v) => setResponses((prev) => ({ ...prev, [q.id]: v }))}
+                                  language={language}
                                 />
                               </CardContent>
                             </Card>
@@ -464,12 +595,13 @@ export default function DemoSurvey() {
                           {currentQuestions.map((q, index) => (
                             <Card key={q.id} className="bg-white/5 border-white/20 shadow-2xl h-64 flex flex-col">
                               <CardContent className="p-6 flex-1 flex flex-col">
-                                <div className="text-white text-base mb-4 flex-shrink-0">{q.question}</div>
+                                <div className="text-white text-base mb-4 flex-shrink-0">{getQuestionText(q)}</div>
                                 <div className="flex-1 flex items-center justify-center">
                                   <QuestionPreview
                                     question={q}
                                     value={responses[q.id] ?? ""}
                                     setValue={(v) => setResponses((prev) => ({ ...prev, [q.id]: v }))}
+                                    language={language}
                                   />
                                 </div>
                               </CardContent>
@@ -505,12 +637,13 @@ export default function DemoSurvey() {
                           {currentQuestions.map(q => (
                             <Card key={q.id} className="bg-white/5 border-white/20 shadow-2xl h-64 flex flex-col">
                               <CardContent className="p-6 flex-1 flex flex-col">
-                                <div className="text-white text-base mb-4 flex-shrink-0">{q.question}</div>
+                                <div className="text-white text-base mb-4 flex-shrink-0">{getQuestionText(q)}</div>
                                 <div className="flex-1 flex items-center justify-center">
                                   <QuestionPreview
                                     question={q}
                                     value={responses[q.id] ?? ""}
                                     setValue={(v) => setResponses((prev) => ({ ...prev, [q.id]: v }))}
+                                    language={language}
                                   />
                                 </div>
                               </CardContent>
@@ -525,11 +658,12 @@ export default function DemoSurvey() {
                       {currentQuestions.map(q => (
                         <Card key={q.id} className="bg-white/5 border-white/20 shadow-2xl mb-6">
                           <CardContent className="p-8">
-                            <div className="text-white text-lg mb-4">{q.question}</div>
+                            <div className="text-white text-lg mb-4">{getQuestionText(q)}</div>
                             <QuestionPreview
                               question={q}
                               value={responses[q.id] ?? ""}
                               setValue={(v) => setResponses((prev) => ({ ...prev, [q.id]: v }))}
+                              language={language}
                             />
                           </CardContent>
                         </Card>
@@ -545,16 +679,16 @@ export default function DemoSurvey() {
                         disabled={questionPage === 0}
                         onClick={() => setQuestionPage(p => Math.max(0, p - 1))}
                       >
-                        Anterior
+                        {t.previous}
                       </Button>
-                      <span className="text-white/80 self-center">Página {questionPage + 1} de {totalPages}</span>
+                      <span className="text-white/80 self-center">{t.page} {questionPage + 1} {t.of} {totalPages}</span>
                       <Button
                         variant="outline"
                         className="text-white border-white/30 bg-transparent hover:bg-white/10"
                         disabled={questionPage === totalPages - 1}
                         onClick={() => setQuestionPage(p => Math.min(totalPages - 1, p + 1))}
                       >
-                        Siguiente
+                        {t.next}
                       </Button>
                     </div>
                   )}
@@ -573,7 +707,7 @@ export default function DemoSurvey() {
                     disabled={(totalPages <= 1 || questionPage === 0) && subcatStep === 0}
                     className="bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white tracking-wide"
                   >
-                    Anterior
+                    {t.previous}
                   </Button>
                   
                   {/* Botón para avanzar */}
@@ -589,10 +723,10 @@ export default function DemoSurvey() {
                     className="bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white tracking-wide"
                   >
                     {totalPages > 1 && questionPage < totalPages - 1
-                      ? "Siguiente"
+                      ? t.next
                       : isLastSubcat
-                        ? "Finalizar encuesta"
-                        : "Siguiente sección"}
+                        ? t.finishSurvey
+                        : t.nextSection}
                     <ChevronRight size={20} />
                   </Button>
                 </div>
@@ -612,28 +746,28 @@ export default function DemoSurvey() {
                         <img src="/images/Logo.png" alt="Logo" className="w-16 h-16" />
                       </div>
                       <h3 className="text-3xl font-light text-white mb-2 tracking-[0.2em] uppercase">
-                        ¡Gracias por contestar la encuesta!
+                        {t.thankYou}
                       </h3>
                       <p className="text-white/80 tracking-wide text-lg mb-4">
-                        Tu opinión es muy valiosa para nosotros y nos ayuda a mejorar cada detalle de tu experiencia.
+                        {t.thankYouMessage}
                       </p>
                       <p className="text-amber-300 text-xl font-light tracking-wide">
-                        ¡Gracias por tu opinión, {mockGuest.name}! Esperamos verte pronto para que disfrutes aún más.
+                        {t.thankYouPersonal.replace('{name}', mockGuest.name)}
                       </p>
                     </div>
                     <div className="space-y-4">
                       <div className="text-center">
                         <h4 className="text-xl font-light text-amber-300 mb-2 tracking-wide">
-                          ¿Te gustaría compartir algún comentario adicional?
+                          {t.additionalComments}
                         </h4>
                         <p className="text-white/70 text-sm">
-                          Cualquier sugerencia o comentario que nos ayude a mejorar la experiencia es bienvenido.
+                          {t.commentsSubtitle}
                         </p>
                       </div>
                       <Textarea
                         value={responses["improvement_comments"] ?? ""}
                         onChange={(e) => setResponses((prev) => ({ ...prev, improvement_comments: e.target.value }))}
-                        placeholder="Escribe aquí tus comentarios, sugerencias o cualquier detalle que consideres importante para mejorar la experiencia..."
+                        placeholder={t.commentsPlaceholder}
                         className="min-h-32 border-white/30 focus:border-amber-400 resize-none bg-white/10 text-white placeholder:text-white/60 backdrop-blur-sm"
                         disabled={loading}
                       />
@@ -645,13 +779,13 @@ export default function DemoSurvey() {
                         className="flex-1 border-white/30 text-white hover:bg-white/10 bg-transparent backdrop-blur-sm tracking-wide"
                         disabled={loading}
                       >
-                        Volver
+                        {t.back}
                       </Button>
                       <Button
                         onClick={() => setStep(3)}
                         className="flex-1 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 tracking-wider uppercase font-light"
                       >
-                        Finalizar
+                        {t.finish}
                         <ChevronRight size={20} className="ml-2" />
                       </Button>
                     </div>
@@ -669,9 +803,9 @@ export default function DemoSurvey() {
                   <div className="mx-auto flex justify-center">
                     <img src="/images/Logo.png" alt="Logo" className="w-20 h-20" />
                   </div>
-                  <h2 className="text-4xl font-light text-white tracking-[0.2em] uppercase">¡Gracias por tu tiempo!</h2>
+                  <h2 className="text-4xl font-light text-white tracking-[0.2em] uppercase">{t.finalThankYou}</h2>
                   <p className="text-white/90 max-w-md mx-auto leading-relaxed tracking-wide">
-                    Tu opinión es muy valiosa para nosotros. Nos ayuda a crear experiencias aún más memorables.
+                    {t.finalMessage}
                   </p>
                 </div>
               </motion.div>
