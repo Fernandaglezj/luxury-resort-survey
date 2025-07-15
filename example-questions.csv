@@ -1,0 +1,11 @@
+id,question,inputType,options,minValue,maxValue,required,order
+q1,"¿Cómo calificarías nuestro servicio de restaurantes?",stars,,1,5,true,1
+q2,"¿Qué actividades disfrutaste más durante tu estadía?",checkbox,"Piscina|Spa|Restaurante|Actividades acuáticas|Tour cultural|Golf|Yoga|Masajes",,,true,2
+q3,"¿Recomendarías el hotel a amigos y familiares?",yesno,,,true,3
+q4,"¿Cómo te sentiste después de tu experiencia en el spa?",slider,,0,100,true,4
+q5,"¿Cuál fue tu restaurante favorito?",select,"Saffron|Bamboo|Oriental|La Copa|Room Service",,,true,5
+q6,"¿Qué tan satisfecho estás con la limpieza de tu habitación?",rating,,1,10,true,6
+q7,"¿Cuántas veces utilizaste el servicio a la habitación?",number,,0,20,false,7
+q8,"¿Qué mejoras sugerirías para el hotel?",textarea,,,false,8
+q9,"¿Cuál es tu rango de edad?",radio,"18-25|26-35|36-45|46-55|56+",,true,9
+q10,"¿Te gustaría recibir ofertas especiales por email?",yesno,,,false,10 
