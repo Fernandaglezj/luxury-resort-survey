@@ -323,8 +323,10 @@ export default function DemoSurvey() {
   const totalPages = Math.ceil(totalQuestions / QUESTIONS_PER_PAGE);
 
   const handleRoomSubmit = () => {
-    if (!roomNumber.trim() || !lastName.trim()) {
-      setRoomError(t.roomError);
+    // Validar que sean los datos específicos del demo
+    const normalizedLastName = lastName.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    if (roomNumber.trim() !== "101" || (normalizedLastName !== "garcia")) {
+      setRoomError("Datos incorrectos. Use habitación 101 y apellido García para acceder al demo.");
       return;
     }
     setRoomError("");
